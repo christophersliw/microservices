@@ -6,6 +6,13 @@ namespace mikroserwisy.Controllers
 	[Route("api/products/record")]
 	public class RecordController : ControllerBase
 	{
+		private readonly HttpClient _httpClient;
+
+		public RecordController()
+		{
+			_httpClient = new HttpClient();
+		}
+		
 		private IList<string> _productList = new List<string>()
 		{
 			"prcduct1", "product2", "procuct3"
@@ -14,8 +21,12 @@ namespace mikroserwisy.Controllers
 		[HttpGet]
 		public async  Task<IActionResult> Get()
 		{
-			 var result =  await  GetProductList();
+			var response = await _httpClient.GetAsync("http://productapi/api/productservice/record");
 
+			response.EnsureSuccessStatusCode();
+
+			var result = await response.Content.ReadFromJsonAsync<List<string>>();
+			
 			return Ok(result);
 		}
 		

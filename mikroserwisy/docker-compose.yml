@@ -1,9 +1,0 @@
-
-services:
-  mikroserwisy.api:
-    image: ${DOCKER_REGISTRY-}mikroserwisyapi
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-        - 8001:80

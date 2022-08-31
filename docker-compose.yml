@@ -1,0 +1,28 @@
+
+services:
+  mikroserwisyapi:
+    image: ${DOCKER_REGISTRY-}mikroserwisyapi01
+    container_name: mikroserwisyapi
+    build:
+      context: .
+      dockerfile: mikroserwisy/Dockerfile-compose
+    ports:
+        - 5146:80
+    networks:
+      - my_network
+        
+  productapi:
+    image: ${DOCKER_REGISTRY-}productapi01
+    container_name: productapi
+    build:
+      context: .
+      dockerfile: Product.API/Dockerfile-compose
+    ports:
+        - 5192:80
+    networks:
+      - my_network
+
+
+networks:
+  my_network:
+    driver: bridge

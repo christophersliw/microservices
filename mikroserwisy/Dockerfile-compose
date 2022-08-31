@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 5146
-
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 # Install NodeJs
@@ -12,9 +11,9 @@ wget -qO- https://deb.nodesource.com/setup_16.x | bash - && \
 apt-get install -y build-essential nodejs
 # End Install
 WORKDIR /src
-COPY ["mikroserwisy.csproj", "mikroserwisy/"]
+COPY ["/mikroserwisy/mikroserwisy.csproj", "mikroserwisy/"]
 RUN dotnet restore "mikroserwisy/mikroserwisy.csproj"
-COPY  [".", "mikroserwisy/"]
+COPY  ["/mikroserwisy/.", "mikroserwisy/"]
 WORKDIR "/src/mikroserwisy"
 RUN dotnet build "mikroserwisy.csproj"  -c Release -o /app/build
 
