@@ -11,6 +11,7 @@ public static class PersistanceEFInstallation
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
         services.AddScoped<IAsyncUserRepository, UserRepository>();
+        services.AddScoped<IAsyncUserOfferRepository, UserOfferRepository>();
         return services;
     }
 }
