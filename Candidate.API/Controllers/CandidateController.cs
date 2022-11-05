@@ -1,3 +1,4 @@
+using Candidate.Application.Functions.Candidates.Commands.CreateCandidateOffer;
 using Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,4 +24,17 @@ public class CandidateController : ControllerBase
 
         return Ok(userInListViewModel);
     }
+
+    //POST: api/candidateservice/candidate
+    [HttpPost]
+    public async Task<ActionResult> Post([FromBody] CreatedCandidateOfferCommand createdCandidateOfferCommand)
+    {
+        await _mediator.Send(createdCandidateOfferCommand);
+        
+        return NoContent();
+    }
+    
+    
+
+    
 }

@@ -1,8 +1,9 @@
 using AutoMapper;
+using Candidate.Application.Functions.Candidates.Events;
 using Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
 using Candidate.Application.Responses;
 using Candidate.Domain.Entities;
-using Recruitment.API.Contract.Item;
+using Recruitment.API.Client.Responses;
 
 namespace Candidate.Application.Mapper;
 
@@ -21,5 +22,11 @@ public class MappingProfile : Profile
                 opt => opt.MapFrom(src => src.OfferId))
             .ForMember(dest => dest.Name,
                 opt => opt.MapFrom(src => src.Name));
+        
+        CreateMap<CreateCandidateApplicationEvent, UserOffer>()
+            .ForMember(dest => dest.OfferId,
+                opt => opt.MapFrom(src => src.OfferId))
+            .ForMember(dest => dest.UserId,
+                opt => opt.MapFrom(src => src.UserId));
     }
 }

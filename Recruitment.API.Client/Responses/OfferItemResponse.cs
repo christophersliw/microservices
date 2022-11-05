@@ -1,4 +1,4 @@
-namespace Recruitment.API.Contract.Item;
+namespace Recruitment.API.Client.Responses;
 
 public class OfferItemResponse
 {

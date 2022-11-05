@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddCandidateApplication(new Uri(builder.Configuration["RecruitmentApiUrl"]));
+builder.Services.AddEventBusConfiguration(builder.Configuration);
 builder.Services.AddPersistanceEFServices();
 
 var app = builder.Build();

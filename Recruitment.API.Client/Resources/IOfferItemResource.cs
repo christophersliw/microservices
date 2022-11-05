@@ -1,4 +1,5 @@
-using Recruitment.API.Contract.Item;
+
+using Recruitment.API.Client.Responses;
 
 namespace Recruitment.API.Client.Resources;
 

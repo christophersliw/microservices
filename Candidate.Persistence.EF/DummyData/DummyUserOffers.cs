@@ -4,7 +4,9 @@ namespace Candidate.Persistence.EF.DummyData;
 
 public class DummyUserOffers
 {
-    public static List<UserOffer> Get()
+    private static List<UserOffer> _applicationList;
+
+    static DummyUserOffers()
     {
         UserOffer uo1 = new UserOffer()
         {
@@ -16,12 +18,20 @@ public class DummyUserOffers
             OfferId = 2, ApplicationDate = DateTime.Parse("2022-0-01"), UserId = 1, UserOfferId = Guid.NewGuid()
         };
 
-        var applicationList = new List<UserOffer>
+        _applicationList = new List<UserOffer>
         {
             uo1,
-            uo1
+            uo2
         };
+    }
 
-        return applicationList;
+    public static List<UserOffer> Get()
+    {
+        return _applicationList;
+    }
+
+    public static void Add(UserOffer userOffer)
+    {
+        _applicationList.Add(userOffer);
     }
 }

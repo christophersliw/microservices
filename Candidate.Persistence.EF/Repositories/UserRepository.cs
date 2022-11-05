@@ -6,7 +6,7 @@ namespace Candidate.Persistence.EF.Repositories;
 
 public class UserRepository : BaseRepository<User>, IAsyncUserRepository
 {
-    public Task<IReadOnlyList<User>> GetAllAsync()
+    public new Task<IReadOnlyList<User>> GetAllAsync()
     {
         return Task.FromResult<IReadOnlyList<User>>(DummyUsers.Get());
     }

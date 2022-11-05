@@ -1,4 +1,5 @@
 using System.Reflection;
+using Candidate.Application.BackgroundServices;
 using Candidate.Application.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,10 +17,12 @@ namespace Candidate.Application
             services.AddScoped<IOfferClientService, OfferClientService>();
 
             services.AddHttpClient<IOfferClient, OfferClient>(client => { client.BaseAddress = recruitmentServiceUri; });
-            
-            
+
+            services.AddHostedService<CandidateApplicationBackgroundService>();
 
             return services;
         }
+        
+        
     }
 }
