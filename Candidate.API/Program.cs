@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddCandidateApplication(new Uri(builder.Configuration["RecruitmentApiUrl"]));
 builder.Services.AddEventBusConfiguration(builder.Configuration);

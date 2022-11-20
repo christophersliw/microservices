@@ -28,5 +28,11 @@ public class MappingProfile : Profile
                 opt => opt.MapFrom(src => src.OfferId))
             .ForMember(dest => dest.UserId,
                 opt => opt.MapFrom(src => src.UserId));
+        
+        CreateMap<OfferResponse, OfferViewModel>()
+            .ForMember(dest => dest.OfferId,
+                opt => opt.MapFrom(src => src.OfferId))
+            .ForMember(dest => dest.Name,
+                opt => opt.MapFrom(src => src.Name));
     }
 }

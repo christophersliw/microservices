@@ -8,10 +8,10 @@ public class CreatedCandidateOfferCommandHandler : IRequestHandler<CreatedCandid
 {
     private readonly IEventBus _eventBus;
 
-    public CreatedCandidateOfferCommandHandler(IEventBus eventBus)
-    {
-        _eventBus = eventBus;
-    }
+    // public CreatedCandidateOfferCommandHandler(IEventBus eventBus)
+    // {
+    //     _eventBus = eventBus;
+    // }
     
     public async Task<CreatedCandidateOfferCommandResponse> Handle(CreatedCandidateOfferCommand request, CancellationToken cancellationToken)
     {

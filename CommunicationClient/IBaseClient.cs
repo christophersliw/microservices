@@ -1,4 +1,4 @@
-namespace Recruitment.API.Client.Base;
+namespace CommunicationClient;
 
 public interface IBaseClient
 {

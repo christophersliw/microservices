@@ -6,9 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\CommunicationClient\CommunicationClient.csproj" />
-      <ProjectReference Include="..\Recruitment.API.Contract\Recruitment.API.Contract.csproj" />
-    </ItemGroup>
-
 </Project>

@@ -1,4 +1,4 @@
-using Recruitment.API.Client.Base;
+using CommunicationClient;
 using Recruitment.API.Client.Responses;
 
 namespace Recruitment.API.Client.Resources;
@@ -20,6 +20,6 @@ public class OfferItemResource : IOfferItemResource
 
     private Uri BuildUri(int id)
     {
-        return _client.BuildUri($"api/recruitmentseservice/{id}");
+        return _client.BuildUri($"api/recruitmentseservice/offer/{id}");
     }
 }

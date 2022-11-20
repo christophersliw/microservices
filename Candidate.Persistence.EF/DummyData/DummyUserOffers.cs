@@ -10,12 +10,12 @@ public class DummyUserOffers
     {
         UserOffer uo1 = new UserOffer()
         {
-            OfferId = 1, ApplicationDate = DateTime.Parse("2022-0-01"), UserId = 1, UserOfferId = Guid.NewGuid()
+            OfferId = 1, ApplicationDate = DateTime.Parse("2022-01-01"), UserId = 1, UserOfferId = Guid.NewGuid()
         };
 
         UserOffer uo2 = new UserOffer()
         {
-            OfferId = 2, ApplicationDate = DateTime.Parse("2022-0-01"), UserId = 1, UserOfferId = Guid.NewGuid()
+            OfferId = 2, ApplicationDate = DateTime.Parse("2022-01-01"), UserId = 1, UserOfferId = Guid.NewGuid()
         };
 
         _applicationList = new List<UserOffer>

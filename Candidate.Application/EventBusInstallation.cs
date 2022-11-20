@@ -20,7 +20,7 @@ public static class EventBusInstallation
             Password = eventBusSettings.Password
         };
 
-        services.AddSingleton(eventBusSettings);
+        services.AddSingleton(factory);
         
         return services;
     }
