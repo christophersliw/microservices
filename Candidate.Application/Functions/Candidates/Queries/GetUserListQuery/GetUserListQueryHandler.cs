@@ -57,7 +57,11 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
                 
                 foreach (var userOffer in userApplicationList)
                 {
-                    ApplicationViewModel applicationViewModel = new ApplicationViewModel();
+                    ApplicationViewModel applicationViewModel = new ApplicationViewModel()
+                    {
+                        ApplicationDate = userOffer.ApplicationDate,
+                        ApplicationGuid = userOffer.UserOfferId
+                    };
 
                     var offerResponse = offers.FirstOrDefault(e => e.OfferId == userOffer.OfferId);
 
@@ -65,6 +69,8 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
                     {
                         applicationViewModel.Offer = _mapper.Map<OfferViewModel>(offerResponse);
                     }
+                    
+                    user.ApplicationList.Add(applicationViewModel);
                 }
             }
         }

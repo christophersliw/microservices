@@ -25,7 +25,7 @@ public class BaseClient : IBaseClient
         _logger.LogInformation($"BaseClient > GetAsync ({uri.AbsoluteUri} status code:{response.StatusCode})");
         
         response.EnsureSuccessStatusCode();
-
+        
         var result = await response.Content.ReadFromJsonAsync<T>();
 
         return result;
