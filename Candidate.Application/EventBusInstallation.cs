@@ -15,9 +15,7 @@ public static class EventBusInstallation
 
         ConnectionFactory factory = new ConnectionFactory()
         {
-            HostName = eventBusSettings.HostName,
-            UserName = eventBusSettings.User,
-            Password = eventBusSettings.Password
+            HostName = eventBusSettings.HostName
         };
 
         services.AddSingleton(factory);

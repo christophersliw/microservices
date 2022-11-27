@@ -1,4 +1,5 @@
 using Candidate.Application.Functions.Candidates.Commands.CreateCandidateOffer;
+using Candidate.Application.Functions.Candidates.Events;
 using Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,7 @@ public class CandidateController : ControllerBase
     public async Task<ActionResult> Post([FromBody] CreatedCandidateOfferCommand createdCandidateOfferCommand)
     {
         await _mediator.Send(createdCandidateOfferCommand);
-        
+
         return NoContent();
     }
     

@@ -18,7 +18,7 @@ namespace Candidate.Application
 
             services.AddHttpClient<IOfferClient, OfferClient>(client => { client.BaseAddress = recruitmentServiceUri; });
 
-           // services.AddHostedService<CandidateApplicationBackgroundService>();
+            services.AddHostedService<CandidateApplicationBackgroundService>();
 
             return services;
         }
