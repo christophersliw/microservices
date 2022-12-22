@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Candidate.Domain\Candidate.Domain.csproj" />
       <ProjectReference Include="..\MQ\MQ.csproj" />
+      <ProjectReference Include="..\RabbitMQ\RabbitMQ.csproj" />
       <ProjectReference Include="..\Recruitment.API.Client\Recruitment.API.Client.csproj" />
       <ProjectReference Include="..\Recruitment.API.Contract\Recruitment.API.Contract.csproj" />
     </ItemGroup>

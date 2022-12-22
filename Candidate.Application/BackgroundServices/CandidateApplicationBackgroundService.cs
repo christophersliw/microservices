@@ -43,10 +43,16 @@ public class CandidateApplicationBackgroundService : BackgroundService
         
         _logger.LogInformation("CandidateApplicationBackgroundService > ExecuteAsync > start QueueDeclare");
         
+        //durable ustawiamy na true - jak rabbitmq sie zatrzyma, message nie zniknie, zostaje zapisana, dopoki nie zostanie przetworzona
         _channel.QueueDeclare(queue: _settings.EventQueue, true, false);
         
+        //jeden message jednoczenie, worker nie przyjmie kolejnej wiadmosci dopoki nie przetworzy aktualnej, przydatne jak mamy wiele workerow
+        //  channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
         _logger.LogInformation("CandidateApplicationBackgroundService > ExecuteAsync > end QueueDeclare");
         
+        
+        //jednoczenie zostanie dostarczony tylko jeden msq, dopiero jak worker przerobi dostanie dostarczony kolejny. Mozemy uruchomic dwie instancje mikrosoerwisu z backgroud taskiem
+        _channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
         var consumer = new EventingBasicConsumer(_channel);
         
         consumer.Received += async (sender, ea) =>
@@ -57,12 +63,15 @@ public class CandidateApplicationBackgroundService : BackgroundService
             var @event = JsonConvert.DeserializeObject<CreateCandidateApplicationEvent>(message);
         
             _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received {message}");
+
+            Thread.Sleep(5000);
             
            await _mediator.Send(@event, cancellationToken);
            
+           //wysylamy odpowiedz ze zadanie zostalo przetworzone
            _channel.BasicAck(ea.DeliveryTag, false);
         };
-        
+        //autoAck ustawiamy na false
         _channel.BasicConsume(_settings.EventQueue, false, consumer);
         
         return Task.CompletedTask;

@@ -14,7 +14,11 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 builder.Services.AddCandidateApplication(new Uri(builder.Configuration["RecruitmentApiUrl"]));
-builder.Services.AddEventBusConfiguration(builder.Configuration);
+
+builder.Services.AddEventBus(builder.Configuration);
+builder.Services.AddIntegrationEventBusServices(builder.Configuration);
+builder.Services.AddIntegrationEventBus(builder.Configuration);
+
 builder.Services.AddPersistanceEFServices();
 
 var app = builder.Build();

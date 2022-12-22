@@ -31,6 +31,7 @@ public class CreatedCandidateOfferCommandHandler : IRequestHandler<CreatedCandid
 
             using (var channel = connection.CreateModel())
             {
+                //durable ustawiamy na true - jak rabbitmq sie zatrzyma, message nie zniknie, zostaje zapisana, dopoki nie zostanie przetworzona
                 channel.QueueDeclare(queue: _eventBusSettings.EventQueue, true, false);
 
                 var message = new CreateCandidateApplicationEvent()
@@ -40,10 +41,18 @@ public class CreatedCandidateOfferCommandHandler : IRequestHandler<CreatedCandid
                 };
 
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-                
+                //:)
+                // Note on Message Persistence
+                // Marking messages as persistent doesn't fully guarantee that a message won't be lost.
+                // Although it tells RabbitMQ to save the message to disk, there is still a short time
+                // window when RabbitMQ has accepted a message and hasn't saved it yet. Also,
+                // RabbitMQ doesn't do fsync(2) for every message -- it may be just saved to cache and not really written to the disk.
+                // The persistence guarantees aren't strong, but it's more than enough for our simple task queue.
+                // If you need a stronger guarantee then you can use publisher confirms.
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
 
+                //"" - default exchange
                 channel.BasicPublish(exchange: "",
                     routingKey: _eventBusSettings.EventQueue,
                     basicProperties: properties,
