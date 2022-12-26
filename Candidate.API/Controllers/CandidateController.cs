@@ -1,3 +1,4 @@
+using Candidate.Application.Functions.Candidates.Commands;
 using Candidate.Application.Functions.Candidates.Commands.CreateCandidateOffer;
 using Candidate.Application.Functions.Candidates.Events;
 using Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
@@ -36,6 +37,15 @@ public class CandidateController : ControllerBase
     public async Task<ActionResult> Post([FromBody] CreatedCandidateOfferCommand createdCandidateOfferCommand)
     {
         await _mediator.Send(createdCandidateOfferCommand);
+
+        return NoContent();
+    }
+    
+    //POST: api/candidateservice/changestatus
+    [HttpPost]
+    public async Task<ActionResult> ChangeStatus([FromBody] UpdateCandidateAplicationStatusCommand updateCandidateAplicationStatusCommand)
+    {
+        await _mediator.Send(updateCandidateAplicationStatusCommand);
 
         return NoContent();
     }

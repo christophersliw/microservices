@@ -1,4 +1,4 @@
-using Candidate.Application.Configurations;
+using Event.Application.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -6,7 +6,7 @@ using MQ;
 using RabbitMQ;
 using RabbitMQ.Client;
 
-namespace Candidate.Application;
+namespace Event.Application;
 
 public static class EventBusInstallation
 {

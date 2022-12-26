@@ -1,5 +1,7 @@
 using System.Net.Http.Json;
+using System.Text;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace CommunicationClient;
 
@@ -16,7 +18,7 @@ public class BaseClient : IBaseClient
         _logger = logger;
     }
     
-    public async Task<T> GetAsync<T>(Uri uri, CancellationToken cancellationToken)
+    public async Task<TResponse> GetAsync<TResponse>(Uri uri, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"BaseClient > GetAsync ({uri.AbsoluteUri})");
         
@@ -26,7 +28,26 @@ public class BaseClient : IBaseClient
         
         response.EnsureSuccessStatusCode();
         
-        var result = await response.Content.ReadFromJsonAsync<T>();
+        var result = await response.Content.ReadFromJsonAsync<TResponse>();
+
+        return result;
+    }
+
+    public async Task<TResponse> PostAsync<TResponse, TRequestContent>(Uri uri, TRequestContent requestContentObject, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation($"BaseClient > PostAsync ({uri.AbsoluteUri})");
+        
+        var jsonObject = JsonConvert.SerializeObject(requestContentObject);
+
+        var requestContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+        
+        var response = await _client.PostAsync(uri, requestContent, cancellationToken);
+        
+        _logger.LogInformation($"BaseClient > PostAsync ({uri.AbsoluteUri} status code:{response.StatusCode})");
+        
+        response.EnsureSuccessStatusCode();
+        
+        var result = await response.Content.ReadFromJsonAsync<TResponse>();
 
         return result;
     }

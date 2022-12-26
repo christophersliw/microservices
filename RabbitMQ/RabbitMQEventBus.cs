@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MQ;
 using Newtonsoft.Json;
@@ -11,23 +12,23 @@ namespace RabbitMQ;
 public class RabbitMQEventBus : IIntegrationEventBus
 {
     private const string BROKER_NAME = "recruitment_system_event_bus";
-    private const string AUTOFAC_SCOPE_NAME = "recruitment_system_event_bus";
-    
+
     private readonly ILogger<RabbitMQEventBus> _logger;
     private readonly IRabbitMQPersistentConnection _rabbitMqPersistentConnection;
     private readonly IEventBusSubscriptionsManager _eventBusSubscriptionsManager;
-    private readonly ILifetimeScope _lifetimeScope;
+    private readonly IServiceProvider _serviceProvider;
 
     public RabbitMQEventBus(
         ILogger<RabbitMQEventBus> logger, 
         IRabbitMQPersistentConnection rabbitMqPersistentConnection, 
         IEventBusSubscriptionsManager eventBusSubscriptionsManager, 
-        ILifetimeScope lifetimeScope)
+        IServiceProvider serviceProvider
+    )
     {
         _logger = logger;
         _rabbitMqPersistentConnection = rabbitMqPersistentConnection;
         _eventBusSubscriptionsManager = eventBusSubscriptionsManager;
-        _lifetimeScope = lifetimeScope;
+        _serviceProvider = serviceProvider;
     }
     public void Publish(IntegrationBaseEvent @event)
     {
@@ -36,16 +37,16 @@ public class RabbitMQEventBus : IIntegrationEventBus
             _rabbitMqPersistentConnection.TryConnect();
         }
 
-        _logger.LogTrace("RabbitMQEventBus > Publish - tworzymy polaczenie");
+        _logger.LogInformation("RabbitMQEventBus > Publish - tworzymy polaczenie");
 
         //pobieramy routing key na podstawie typu eventa
         var eventName = @event.GetType().Name;
         
-        _logger.LogTrace($"RabbitMQEventBus > Publish - pobieramy typ zdarzenia do wyslania:{eventName}");
+        _logger.LogInformation($"RabbitMQEventBus > Publish - pobieramy typ zdarzenia do wyslania:{eventName}");
 
         using (var channel = _rabbitMqPersistentConnection.CreateModel())
         {
-            _logger.LogTrace($"RabbitMQEventBus > Publish - definiujemy exchange brokera");
+            _logger.LogInformation($"RabbitMQEventBus > Publish - definiujemy exchange brokera");
             channel.ExchangeDeclare(exchange: BROKER_NAME, type:"direct");
             
             var message = JsonConvert.SerializeObject(@event);
@@ -55,7 +56,7 @@ public class RabbitMQEventBus : IIntegrationEventBus
             //zapisanie na dysku przed wyslaniem
             properties.DeliveryMode = 2; // persistent
             
-            _logger.LogTrace($"RabbitMQEventBus > Publish - pubishing event: {@event.EventId}");
+            _logger.LogInformation($"RabbitMQEventBus > Publish - pubishing event: {@event.EventId}");
             channel.BasicPublish(exchange: 
                 BROKER_NAME,
                 routingKey: eventName,
@@ -97,14 +98,15 @@ public class RabbitMQEventBus : IIntegrationEventBus
                         var body = ea.Body.ToArray();
                         var message = Encoding.UTF8.GetString(body);
                         
-                        //nalezy utworzyc wlasny scope, nie jestesmy w request, alternatywa to IServiceScopeFactory 
-                        using (var scope = _lifetimeScope.BeginLifetimeScope(AUTOFAC_SCOPE_NAME))
+                        // //nalezy utworzyc wlasny scope, nie jestesmy w request, alternatywa to IServiceScopeFactory 
+                        // using (var scope = _lifetimeScope.BeginLifetimeScope(AUTOFAC_SCOPE_NAME))
+                        using (IServiceScope scope = _serviceProvider.CreateScope())
                         {
                             var subcripions = _eventBusSubscriptionsManager.GetHandlersForEvent(eventName);
                     
                             foreach (var subscriptionInfo in subcripions)
                             {
-                                var handler = scope.ResolveOptional(subscriptionInfo.HandlerType);
+                                var handler = scope.ServiceProvider.GetRequiredService(subscriptionInfo.HandlerType);
                                 
                                 if (handler == null)
                                     continue;

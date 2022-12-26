@@ -64,11 +64,19 @@ public class CandidateApplicationBackgroundService : BackgroundService
         
             _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received {message}");
 
-            Thread.Sleep(5000);
+            for (int i = 0; i < 10; i++)
+            {
+                _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - processing................");
+                Thread.Sleep(1000);
+            }
+           
             
            await _mediator.Send(@event, cancellationToken);
            
-           //wysylamy odpowiedz ze zadanie zostalo przetworzone
+           _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - END processing. Kandydat dodany");
+           
+           
+           //wysylamy odpowiedz ze zadanie zostalo przetworzone, jezeli zadanie nie zostalo przetworzne, chwyci to drugi aktywny worker.
            _channel.BasicAck(ea.DeliveryTag, false);
         };
         //autoAck ustawiamy na false
