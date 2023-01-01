@@ -15,12 +15,14 @@ public class UpdateAplicationsStatusResource : IUpdateApplicationStatusResource
     
     public async Task<UpdateApplicationStatusResponse> UpdateStatus(UpdateStatusRequest requestContent, CancellationToken cancellationToken)
     {
-        var uri = BuildUri();
-        return await _client.PostAsync<UpdateApplicationStatusResponse, UpdateStatusRequest>(uri, requestContent, cancellationToken);
+        var uri = BuildUri(requestContent.UserOfferId);
+        await _client.PutAsync<UpdateStatusRequest>(uri, requestContent, cancellationToken);
+
+        return new UpdateApplicationStatusResponse();
     }
     
-    private Uri BuildUri()
+    private Uri BuildUri(Guid id)
     {
-        return _client.BuildUri($"api/candidateservice/changestatus");
+        return _client.BuildUri($"api/candidateservice/candidate/{id}/changestatus");
     }
 }

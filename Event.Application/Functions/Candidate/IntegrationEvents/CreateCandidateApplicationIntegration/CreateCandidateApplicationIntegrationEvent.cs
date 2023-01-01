@@ -1,6 +1,6 @@
 using MQ;
 
-namespace Candidate.Application.IntegrationEvents;
+namespace Event.Application.Functions.Candidate.IntegrationEvents;
 
 public class CreateCandidateApplicationIntegrationEvent : IntegrationBaseEvent
 {

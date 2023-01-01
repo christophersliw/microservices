@@ -10,10 +10,10 @@ public class UserOfferRepository : BaseRepository<UserOffer>, IAsyncUserOfferRep
         return Task.FromResult<IReadOnlyList<UserOffer>>(DummyUserOffers.Get().Where(e => e.UserId == userId).ToList());
     }
     
-    public new Task<UserOffer> AddAsync(UserOffer entity)
+    public override Task<UserOffer> AddAsync(UserOffer entity)
     {
-        DummyUserOffers.Add(entity);
+        var result = DummyUserOffers.Add(entity);
         
-        return Task.FromResult<UserOffer>(entity);
+        return Task.FromResult<UserOffer>(result);
     }
 }

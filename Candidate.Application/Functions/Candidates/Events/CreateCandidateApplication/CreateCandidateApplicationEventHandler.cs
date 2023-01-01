@@ -47,6 +47,7 @@ public class CreateCandidateApplicationEventHandler : IRequestHandler<CreateCand
                 EventId = Guid.NewGuid(),
                 OfferId = userOfferEntity.OfferId,
                 UserId = userOfferEntity.UserId,
+                UserOfferId = userOfferEntity.UserOfferId,
                 CreatedEventDate = DateTime.Now
             });
         }

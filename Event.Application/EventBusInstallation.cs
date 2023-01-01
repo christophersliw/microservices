@@ -1,4 +1,5 @@
 using Event.Application.Configurations;
+using Event.Application.Functions.Candidate.IntegrationEvents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -10,28 +11,12 @@ namespace Event.Application;
 
 public static class EventBusInstallation
 {
-    //konfiguracja dla kolejki wykorzystywanej przez background service
-    public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
-    {
-        var eventBusSettings = configuration.GetSection("EventBus").Get<EventBusSettings>();
-
-        services.AddSingleton(eventBusSettings);
-
-        ConnectionFactory factory = new ConnectionFactory()
-        {
-            HostName = eventBusSettings.HostName
-        };
-
-        services.AddSingleton(factory);
-
-        services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
-        
-        return services;
-    }
     
     //konfiguracja servisow dla kolejki wykorzystywanej przez integration events
     public static IServiceCollection AddIntegrationEventBusServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
+        
         var eventBusSettings = configuration.GetSection("EventIntegrationBus").Get<EventBusSettings>();
         
         services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
@@ -41,7 +26,7 @@ public static class EventBusInstallation
             var factory = new ConnectionFactory()
             {
                 HostName = eventBusSettings.HostName,
-                DispatchConsumersAsync = true
+              //  DispatchConsumersAsync = true
             };
             
             return new RabbitMQPersistentConnection(factory, logger);
@@ -65,6 +50,12 @@ public static class EventBusInstallation
                 iLifetimeScope);
 
         });
+        
+        return services;
+    }
+    public static IServiceCollection AddIntegrationEventBusHandlers(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddTransient<CreateCandidateApplicationIntegrationEventHandler>();
         
         return services;
     }

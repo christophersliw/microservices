@@ -64,7 +64,7 @@ public class CandidateApplicationBackgroundService : BackgroundService
         
             _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received {message}");
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
                 _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - processing................");
                 Thread.Sleep(1000);

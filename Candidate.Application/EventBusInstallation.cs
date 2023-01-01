@@ -23,8 +23,6 @@ public static class EventBusInstallation
         };
 
         services.AddSingleton(factory);
-
-        services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
         
         return services;
     }
@@ -32,6 +30,8 @@ public static class EventBusInstallation
     //konfiguracja servisow dla kolejki wykorzystywanej przez integration events
     public static IServiceCollection AddIntegrationEventBusServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
+        
         var eventBusSettings = configuration.GetSection("EventIntegrationBus").Get<EventBusSettings>();
         
         services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
@@ -41,7 +41,7 @@ public static class EventBusInstallation
             var factory = new ConnectionFactory()
             {
                 HostName = eventBusSettings.HostName,
-                DispatchConsumersAsync = true
+               // DispatchConsumersAsync = true
             };
             
             return new RabbitMQPersistentConnection(factory, logger);

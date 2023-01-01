@@ -36,18 +36,20 @@ public class CandidateController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post([FromBody] CreatedCandidateOfferCommand createdCandidateOfferCommand)
     {
+        _logger.LogInformation("start - CandidateController > Post");
+        
         await _mediator.Send(createdCandidateOfferCommand);
 
-        return NoContent();
+        return Ok();
     }
     
-    //POST: api/candidateservice/changestatus
-    [HttpPost]
-    public async Task<ActionResult> ChangeStatus([FromBody] UpdateCandidateAplicationStatusCommand updateCandidateAplicationStatusCommand)
+    //PUT: api/candidateservice/candidate/{id:int}/changestatus
+    [HttpPut("{id:guid}/changestatus")]
+    public async Task<ActionResult> ChangeStatus([FromQuery] Guid id, [FromBody] UpdateCandidateAplicationStatusCommand updateCandidateAplicationStatusCommand)
     {
         await _mediator.Send(updateCandidateAplicationStatusCommand);
 
-        return NoContent();
+        return Ok();
     }
     
     

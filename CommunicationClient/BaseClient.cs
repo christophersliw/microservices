@@ -52,6 +52,41 @@ public class BaseClient : IBaseClient
         return result;
     }
 
+    public async Task<TResponse> PutAsync<TResponse, TRequestContent>(Uri uri, TRequestContent requestContentObject,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation($"BaseClient > PutAsync ({uri.AbsoluteUri})");
+        
+        var jsonObject = JsonConvert.SerializeObject(requestContentObject);
+
+        var requestContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+        
+        var response = await _client.PutAsync(uri, requestContent, cancellationToken);
+        
+        _logger.LogInformation($"BaseClient > PutAsync ({uri.AbsoluteUri} status code:{response.StatusCode})");
+        
+        response.EnsureSuccessStatusCode();
+        
+        var result = await response.Content.ReadFromJsonAsync<TResponse>();
+
+        return result;
+    }
+
+    public async Task PutAsync<TRequestContent>(Uri uri, TRequestContent requestContentObject, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation($"BaseClient > PutAsync ({uri.AbsoluteUri})");
+        
+        var jsonObject = JsonConvert.SerializeObject(requestContentObject);
+
+        var requestContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+        
+        var response = await _client.PutAsync(uri, requestContent, cancellationToken);
+        
+        _logger.LogInformation($"BaseClient > PutAsync ({uri.AbsoluteUri} status code:{response.StatusCode})");
+        
+        response.EnsureSuccessStatusCode();
+    }
+
     public Uri BuildUri(string format)
     {
         return new UriBuilder(_baseUri)

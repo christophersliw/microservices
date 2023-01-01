@@ -30,8 +30,11 @@ public class DummyUserOffers
         return _applicationList;
     }
 
-    public static void Add(UserOffer userOffer)
+    public static UserOffer Add(UserOffer userOffer)
     {
+        userOffer.UserOfferId = Guid.NewGuid();
         _applicationList.Add(userOffer);
+
+        return userOffer;
     }
 }
