@@ -1,17 +1,46 @@
-#docker compose up
 
+#  docker-compose rm -f
+#  docker-compose pull
+#   docker-compose up --build -d
 
+version: "3"
 services:
-  productapi:
+  candidateservice:
     image: ${DOCKER_REGISTRY-}candidateservice
     container_name: candidateservice
+    restart: on-failure
     build:
       context: .
-      dockerfile: src/CandidateService/Candidate.API/Dockerfile-compose
+      dockerfile: CandidateService/Candidate.API/Dockerfile-compose
+    depends_on:
+      - rabbitmqservice
+    links:
+      - rabbitmqservice
     ports:
-        - 7131:80
+      - 7131:80
     networks:
       - my_network
+      
+  rabbitmqservice:
+    image: rabbitmq:3.10-management
+    container_name: rabbitmqservice
+    hostname: "rabbitmqservice"
+    ports:
+      - 4369:4369
+      - 5671:5671
+      - 5672:5672
+      - 25672:25672
+      - 15671:15671
+      - 15672:15672
+    networks:
+      - my_network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
 networks:
   my_network:
     driver: bridge

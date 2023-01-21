@@ -19,7 +19,10 @@ public static class EventBusInstallation
 
         ConnectionFactory factory = new ConnectionFactory()
         {
-            HostName = eventBusSettings.HostName
+            HostName = eventBusSettings.HostName,
+            Port= 5672,
+            UserName = "guest",
+            Password = "guest"
         };
 
         services.AddSingleton(factory);
