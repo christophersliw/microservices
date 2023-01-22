@@ -1,7 +1,7 @@
 
 #  docker-compose rm -f
 #  docker-compose pull
-#   docker-compose up --build -d
+#  docker-compose up --build -d
 
 version: "3"
 services:
@@ -17,7 +17,7 @@ services:
     links:
       - rabbitmqservice
     ports:
-      - 7131:80
+      - 7130:80
     networks:
       - my_network
       

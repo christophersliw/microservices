@@ -1,5 +1,5 @@
 #docker build -f CandidateService/Candidate.API/Dockerfile -t candidate_service:v01 .
-#docker run --rm -it -p 7131:80 candidate_service:v01
+#docker run --rm -it -p 7130:80 candidate_service:v01
 #docker images
 #docker container ls
 
@@ -36,18 +36,6 @@ RUN dotnet restore "CandidateService/Candidate.API/Candidate.API.csproj"
 #kopiujemy pliki
 COPY  CandidateService CandidateService
 COPY  Library Library
-
-#COPY  CandidateService/Candidate.API/ CandidateService/Candidate.API/
-#COPY  CandidateService/Candidate.Application/ CandidateService/Candidate.Application/
-#COPY  CandidateService/Candidate.Domain/ CandidateService/Candidate.Domain/
-#COPY  CandidateService/Candidate.Persistence.EF/ CandidateService/Candidate.Persistence.EF/
-#COPY  CandidateService/Candidate.Services/ CandidateService/Candidate.Services/
-#
-#COPY  Library/Candidate.API.Client Library/Candidate.API.Client/
-#COPY  Library/CommunicationClient Library/CommunicationClient/
-#COPY  Library/MQ Library/MQ/
-#COPY  Library/RabbitMQ Library/RabbitMQ/
-#COPY  Library/Recruitment.API.Client Library/Recruitment.API.Client/
 
 WORKDIR "/src/CandidateService/Candidate.API"
 

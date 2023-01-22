@@ -30,7 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//zakomentowane ze wzgledu na problemy z dokerem
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -26,10 +26,16 @@ public class CandidateController : ControllerBase
     {
         _logger.LogInformation("start - CandidateController > Get");
         
-        var userInListViewModel = await _mediator.Send(new GetUserListQuery() {PageIndex = pageIndex, PageSize = pageSize});
+       // var userInListViewModel = await _mediator.Send(new GetUserListQuery() {PageIndex = pageIndex, PageSize = pageSize});
 
         _logger.LogInformation("end - CandidateController > Get");
-        return Ok(userInListViewModel);
+        return Ok(new List<UserViewModel>()
+        {
+            new UserViewModel()
+            {
+                UserId = 1
+            }
+        });
     }
 
     //POST: api/candidateservice/candidate
