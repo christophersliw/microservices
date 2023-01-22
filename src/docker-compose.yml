@@ -5,6 +5,38 @@
 
 version: "3"
 services:
+  eventservice:
+    image: ${DOCKER_REGISTRY-}eventservice
+    container_name: eventservice
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: EventService/Event.API/Dockerfile-compose
+    depends_on:
+      - rabbitmqservice
+    links:
+      - rabbitmqservice
+    ports:
+      - 7150:80
+    networks:
+      - my_network
+  
+  recruitmentservice:
+    image: ${DOCKER_REGISTRY-}recruitmentservice
+    container_name: recruitmentservice
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: RecruitmentService/Recruitment.API/Dockerfile-compose
+    depends_on:
+      - rabbitmqservice
+    links:
+      - rabbitmqservice
+    ports:
+      - 7140:80
+    networks:
+      - my_network
+      
   candidateservice:
     image: ${DOCKER_REGISTRY-}candidateservice
     container_name: candidateservice
