@@ -7,19 +7,19 @@ public class DummyOffer
         Offer o1 = new Offer()
         {
             Name = "Programista c#",
-            OfferId = 1
+            Id = Guid.NewGuid()
         };
 
         Offer o2 = new Offer()
         {
             Name = "Programista angular",
-            OfferId = 2
+            Id = Guid.NewGuid()
         };
         
         Offer o3 = new Offer()
         {
             Name = "Programista java",
-            OfferId = 3
+            Id = Guid.NewGuid()
         };
         
         

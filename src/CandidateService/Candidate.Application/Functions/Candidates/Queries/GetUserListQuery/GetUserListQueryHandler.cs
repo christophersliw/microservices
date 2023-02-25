@@ -48,7 +48,7 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
                 _logger.LogInformation("GetUserListQueryHandler > Handle - start connect to another microservice");
                 var offerTasks = userApplicationList.Select(async e => await _offerClientService.GetById(e.OfferId, new OfferResponse()
                 {
-                    OfferId = e.OfferId
+                    OfferId = e.Id
                 }, cancellationToken));
 
                 var offers = await Task.WhenAll(offerTasks);
@@ -60,7 +60,7 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
                     ApplicationViewModel applicationViewModel = new ApplicationViewModel()
                     {
                         ApplicationDate = userOffer.ApplicationDate,
-                        ApplicationGuid = userOffer.UserOfferId
+                        ApplicationGuid = userOffer.Id
                     };
 
                     var offerResponse = offers.FirstOrDefault(e => e.OfferId == userOffer.OfferId);

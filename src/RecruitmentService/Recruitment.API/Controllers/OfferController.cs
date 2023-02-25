@@ -19,7 +19,7 @@ public class OfferController : Controller
 
     //GET: api/recruitmentseservice/offer/3
     [HttpGet("{id}")]
-    public async Task<ActionResult<OfferViewModel>> Get(int id)
+    public async Task<ActionResult<OfferViewModel>> Get(Guid id)
     {
         _logger.LogInformation("start - OfferController > Get");
         

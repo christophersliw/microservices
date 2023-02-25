@@ -132,6 +132,7 @@ public class RabbitMQEventBus : IIntegrationEventBus
 
                             var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
+                            //gwarancja tego ze metoda synchroniczna bedzie uruchomiona jako asynchroniczna i watek wyjdzie z tej metody
                             await Task.Yield();
                             await (Task) concreteType.GetMethod("Handle")
                                 .Invoke(handler, new object[] {integrationEvent});

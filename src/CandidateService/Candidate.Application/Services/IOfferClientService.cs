@@ -4,5 +4,5 @@ namespace Candidate.Application.Services;
 
 public interface IOfferClientService
 {
-    Task<OfferResponse> GetById(int id, OfferResponse defaultItem, CancellationToken cancellationToken);
+    Task<OfferResponse> GetById(Guid id, OfferResponse defaultItem, CancellationToken cancellationToken);
 }

@@ -8,12 +8,12 @@ public class DummyUsers
     {
         User u1 = new User()
         {
-            FirstName = "Jacek", Surrname = "Zdanowicz", UserId = 1
+            FirstName = "Jacek", Surrname = "Zdanowicz", Id = Guid.NewGuid()
         };
 
         User u2 = new User()
         {
-            FirstName = "Jurek", Surrname = "Wielki", UserId = 2
+            FirstName = "Jurek", Surrname = "Wielki",Id = Guid.NewGuid()
         };
 
         List<User> userList = new List<User>();

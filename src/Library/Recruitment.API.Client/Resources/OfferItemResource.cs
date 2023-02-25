@@ -12,13 +12,13 @@ public class OfferItemResource : IOfferItemResource
         _client = client;
     }
     
-    public async Task<OfferItemResponse> Get(int id, CancellationToken cancellationToken = default)
+    public async Task<OfferItemResponse> Get(Guid id, CancellationToken cancellationToken = default)
     {
         var uri = BuildUri(id);
         return await _client.GetAsync<OfferItemResponse>(uri, cancellationToken);
     }
 
-    private Uri BuildUri(int id)
+    private Uri BuildUri(Guid id)
     {
         return _client.BuildUri($"api/recruitmentseservice/offer/{id}");
     }

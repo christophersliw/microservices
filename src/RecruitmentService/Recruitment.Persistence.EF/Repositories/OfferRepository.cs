@@ -6,9 +6,9 @@ namespace Recruitment.Persistence.EF.Repositories;
 
 public class OfferRepository : BaseRepository<Offer>, IAsyncOfferRepository
 {
-    public Task<Offer?> GetByIdAsync(int id)
+    public override Task<Offer?> GetByIdAsync(Guid id)
     {
-        return Task.FromResult(DummyOffer.Get().FirstOrDefault(e => e.OfferId == id));
+        return Task.FromResult(DummyOffer.Get().FirstOrDefault(e => e.Id == id));
     }
 
 }

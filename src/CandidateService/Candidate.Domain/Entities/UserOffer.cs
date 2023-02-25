@@ -2,8 +2,9 @@ namespace Candidate.Domain.Entities;
 
 public class UserOffer
 {
-    public Guid UserOfferId { get; set; }
-    public int UserId { get; set; }
-    public int OfferId { get; set; }
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public virtual User User { get; set; }
+    public Guid OfferId { get; set; }
     public DateTime ApplicationDate { get; set; }
 }

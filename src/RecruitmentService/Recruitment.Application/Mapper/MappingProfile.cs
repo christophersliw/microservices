@@ -12,6 +12,6 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Name,
                 opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.OfferId,
-                opt => opt.MapFrom(src => src.OfferId));
+                opt => opt.MapFrom(src => src.Id));
     }
 }

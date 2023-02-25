@@ -15,7 +15,7 @@ public class OfferClientService : IOfferClientService
         _offerClient = offerClient;
     }
     
-    public async Task<OfferResponse> GetById(int id, OfferResponse defaultItem, CancellationToken cancellationToken)
+    public async Task<OfferResponse> GetById(Guid id, OfferResponse defaultItem, CancellationToken cancellationToken)
     {
         try
         {

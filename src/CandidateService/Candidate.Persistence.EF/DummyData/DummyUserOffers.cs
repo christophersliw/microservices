@@ -10,12 +10,12 @@ public class DummyUserOffers
     {
         UserOffer uo1 = new UserOffer()
         {
-            OfferId = 1, ApplicationDate = DateTime.Parse("2022-01-01"), UserId = 1, UserOfferId = Guid.NewGuid()
+            OfferId = Guid.NewGuid(), ApplicationDate = DateTime.Parse("2022-01-01"), UserId = Guid.NewGuid(), Id = Guid.NewGuid()
         };
 
         UserOffer uo2 = new UserOffer()
         {
-            OfferId = 2, ApplicationDate = DateTime.Parse("2022-01-01"), UserId = 1, UserOfferId = Guid.NewGuid()
+            OfferId = Guid.NewGuid(), ApplicationDate = DateTime.Parse("2022-01-01"), UserId = Guid.NewGuid(), Id = Guid.NewGuid()
         };
 
         _applicationList = new List<UserOffer>
@@ -32,7 +32,7 @@ public class DummyUserOffers
 
     public static UserOffer Add(UserOffer userOffer)
     {
-        userOffer.UserOfferId = Guid.NewGuid();
+        userOffer.Id = Guid.NewGuid();
         _applicationList.Add(userOffer);
 
         return userOffer;

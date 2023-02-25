@@ -5,5 +5,5 @@ namespace Recruitment.API.Client.Resources;
 
 public interface IOfferItemResource
 {
-    Task<OfferItemResponse> Get(int id, CancellationToken cancellationToken = default);
+    Task<OfferItemResponse> Get(Guid id, CancellationToken cancellationToken = default);
 }

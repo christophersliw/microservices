@@ -2,7 +2,7 @@ namespace Recruitment.Persistence.EF.Persistance;
 
 public interface IAsyncRepository<T> where T : class
 {
-    Task<T?> GetByIdAsync(int id);
+    Task<T?> GetByIdAsync(Guid id);
 
     Task<IReadOnlyList<T>> GetAllAsync();
 
