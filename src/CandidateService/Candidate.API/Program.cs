@@ -1,5 +1,10 @@
+using System.Reflection;
 using Candidate.Application;
+using Candidate.Application.Contracts.Persistence;
+using Candidate.Application.Installers;
 using Candidate.Persistence.EF;
+using Candidate.Persistence.EF.Installers;
+using Common.Installers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,13 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-builder.Services.AddCandidateApplication(new Uri(builder.Configuration["RecruitmentApiUrl"]));
-
-builder.Services.AddEventBus(builder.Configuration);
-builder.Services.AddIntegrationEventBusServices(builder.Configuration);
-builder.Services.AddIntegrationEventBus(builder.Configuration);
-
-builder.Services.AddPersistanceEFServices();
+builder.Services.InstallerPersistenceEFServiceInAssembly(builder.Configuration);
+builder.Services.InstallerApplicationServiceInAssembly(builder.Configuration);
 
 var app = builder.Build();
 
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //zakomentowane ze wzgledu na problemy z dokerem
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

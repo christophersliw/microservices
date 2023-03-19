@@ -4,6 +4,6 @@ namespace Candidate.Application.Functions.Candidates.Commands.CreateCandidateOff
 
 public class CreatedCandidateOfferCommand : IRequest<CreatedCandidateOfferCommandResponse>
 {
-    public int UserId { get; set; }
-    public int OfferId { get; set; }
+    public Guid UserId { get; set; }
+    public Guid OfferId { get; set; }
 }

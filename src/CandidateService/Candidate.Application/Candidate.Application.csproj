@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Library\Common\Common.csproj" />
       <ProjectReference Include="..\..\Library\MQ\MQ.csproj" />
       <ProjectReference Include="..\..\Library\RabbitMQ\RabbitMQ.csproj" />
       <ProjectReference Include="..\..\Library\Recruitment.API.Client\Recruitment.API.Client.csproj" />

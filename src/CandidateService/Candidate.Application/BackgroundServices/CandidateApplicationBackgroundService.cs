@@ -57,27 +57,33 @@ public class CandidateApplicationBackgroundService : BackgroundService
         
         consumer.Received += async (sender, ea) =>
         {
-            var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
-            
-            var @event = JsonConvert.DeserializeObject<CreateCandidateApplicationEvent>(message);
-        
-            _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received {message}");
-
-            for (int i = 0; i < 2; i++)
+            try
             {
-                _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - processing................");
-                Thread.Sleep(1000);
-            }
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+            
+                var @event = JsonConvert.DeserializeObject<CreateCandidateApplicationEvent>(message);
+        
+                _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received {message}");
+
+                for (int i = 0; i < 2; i++)
+                {
+                    _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - processing................");
+                    Thread.Sleep(1000);
+                }
            
             
-           await _mediator.Send(@event, cancellationToken);
+                await _mediator.Send(@event, cancellationToken);
            
-           _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - END processing. Kandydat dodany");
-           
-           
-           //wysylamy odpowiedz ze zadanie zostalo przetworzone, jezeli zadanie nie zostalo przetworzne, chwyci to drugi aktywny worker.
-           _channel.BasicAck(ea.DeliveryTag, false);
+                _logger.LogInformation($"CandidateApplicationBackgroundService > ExecuteAsync > Received - END processing. Kandydat dodany");
+                
+                //wysylamy odpowiedz ze zadanie zostalo przetworzone, jezeli zadanie nie zostalo przetworzne, chwyci to drugi aktywny worker.
+                _channel.BasicAck(ea.DeliveryTag, false);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"CandidateApplicationBackgroundService > ExecuteAsync > Received - Exception:{e.Message}, InnerException:{e.InnerException?.Message}");
+            }
         };
         //autoAck ustawiamy na false
         _channel.BasicConsume(_settings.EventQueue, false, consumer);

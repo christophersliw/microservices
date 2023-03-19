@@ -112,6 +112,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowHow.Persistence.EF", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnowHow.API", "src\KnowHowService\KnowHow.API\KnowHow.API.csproj", "{B575E83B-8C5F-4558-ADBB-4337F8092CE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Library\Common\Common.csproj", "{28B4AFEF-3611-484B-8C38-364B21491529}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -222,6 +224,10 @@ Global
 		{B575E83B-8C5F-4558-ADBB-4337F8092CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B575E83B-8C5F-4558-ADBB-4337F8092CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B575E83B-8C5F-4558-ADBB-4337F8092CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B4AFEF-3611-484B-8C38-364B21491529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B4AFEF-3611-484B-8C38-364B21491529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B4AFEF-3611-484B-8C38-364B21491529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B4AFEF-3611-484B-8C38-364B21491529}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -278,6 +284,7 @@ Global
 		{5D02498F-D902-4B0F-A3A2-11E0E9347A80} = {CD55C237-F3A4-4D7A-9074-2E57E890A35F}
 		{43DF1497-B537-41A6-BE2D-EC9527BD68C7} = {B422646E-FE6C-4CE4-B69B-C29619757145}
 		{B575E83B-8C5F-4558-ADBB-4337F8092CE4} = {103AB0EC-0F67-4FFB-99BF-C43DA2F66C32}
+		{28B4AFEF-3611-484B-8C38-364B21491529} = {984C4463-4E68-4101-8531-015BAF38C28D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E6013DD-CABB-4816-A270-694619EB38C8}

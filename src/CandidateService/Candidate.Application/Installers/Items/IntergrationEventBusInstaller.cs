@@ -1,4 +1,5 @@
 using Candidate.Application.Configurations;
+using Common.Installers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -6,32 +7,11 @@ using MQ;
 using RabbitMQ;
 using RabbitMQ.Client;
 
-namespace Candidate.Application;
+namespace Candidate.Application.Installers;
 
-public static class EventBusInstallation
+public class IntergrationEventBusInstaller : IInstaller
 {
-    //konfiguracja dla kolejki wykorzystywanej przez background service
-    public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
-    {
-        var eventBusSettings = configuration.GetSection("EventBus").Get<EventBusSettings>();
-
-        services.AddSingleton(eventBusSettings);
-
-        ConnectionFactory factory = new ConnectionFactory()
-        {
-            HostName = eventBusSettings.HostName,
-            Port= 5672,
-            UserName = "guest",
-            Password = "guest"
-        };
-
-        services.AddSingleton(factory);
-        
-        return services;
-    }
-    
-    //konfiguracja servisow dla kolejki wykorzystywanej przez integration events
-    public static IServiceCollection AddIntegrationEventBusServices(this IServiceCollection services, IConfiguration configuration)
+    public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
         
@@ -44,19 +24,12 @@ public static class EventBusInstallation
             var factory = new ConnectionFactory()
             {
                 HostName = eventBusSettings.HostName,
-               // DispatchConsumersAsync = true
+                // DispatchConsumersAsync = true
             };
             
             return new RabbitMQPersistentConnection(factory, logger);
         });
-
-
-        return services;
-    }
-    
-    //konfiguracja dla kolejki wykorzystywanej przez integration events
-    public static IServiceCollection AddIntegrationEventBus(this IServiceCollection services, IConfiguration configuration)
-    {
+        
         services.AddSingleton<IIntegrationEventBus, RabbitMQEventBus>(sp =>
         {
             var logger = sp.GetRequiredService<ILogger<RabbitMQEventBus>>();
@@ -68,7 +41,6 @@ public static class EventBusInstallation
                 iLifetimeScope);
 
         });
-        
-        return services;
+
     }
 }

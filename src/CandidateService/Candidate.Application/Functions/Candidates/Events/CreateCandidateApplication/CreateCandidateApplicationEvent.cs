@@ -4,8 +4,8 @@ namespace Candidate.Application.Functions.Candidates.Events;
 
 public class CreateCandidateApplicationEvent : IRequest<Unit>
 {
-    public int OfferId { get; set; }
-    public int UserId { get; set; }
+    public Guid OfferId { get; set; }
+    public Guid UserId { get; set; }
     
     public Guid UserOfferId { get; set; }
 }
