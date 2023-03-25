@@ -2,5 +2,6 @@ namespace Candidate.Application.Functions.Candidates.Commands.CreateCandidateOff
 
 public class CreatedCandidateOfferCommandResponse
 {
+    public Guid UserOfferId { get; set; }
 
 }

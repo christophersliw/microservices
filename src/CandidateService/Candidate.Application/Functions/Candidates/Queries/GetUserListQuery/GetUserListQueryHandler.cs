@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
 
-public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<UserViewModel>>
+public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<UserQueryResponse>>
 {
     private readonly IMapper _mapper;
     private readonly IAsyncUserRepository _asyncUserRepository;
@@ -29,13 +29,13 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
         _logger = logger;
     }
     
-    public async Task<List<UserViewModel>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
+    public async Task<List<UserQueryResponse>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("start - GetUserListQueryHandler > Handle");
         
         var userList = await _asyncUserRepository.GetAllAsync();
 
-        var result = _mapper.Map<List<UserViewModel>>(userList);
+        var result = _mapper.Map<List<UserQueryResponse>>(userList);
 
         foreach (var user in result)
         {
@@ -43,7 +43,7 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
 
             if (userApplicationList.Any())
             {
-                user.ApplicationList = new List<ApplicationViewModel>();
+                user.ApplicationList = new List<ApplicationQueryResponse>();
 
                 _logger.LogInformation("GetUserListQueryHandler > Handle - start connect to another microservice");
                 var offerTasks = userApplicationList.Select(async e => await _offerClientService.GetById(e.OfferId, new OfferResponse()
@@ -57,7 +57,7 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
                 
                 foreach (var userOffer in userApplicationList)
                 {
-                    ApplicationViewModel applicationViewModel = new ApplicationViewModel()
+                    ApplicationQueryResponse applicationViewModel = new ApplicationQueryResponse()
                     {
                         ApplicationDate = userOffer.ApplicationDate,
                         ApplicationGuid = userOffer.Id
@@ -67,7 +67,7 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
 
                     if (offerResponse != null)
                     {
-                        applicationViewModel.Offer = _mapper.Map<OfferViewModel>(offerResponse);
+                        applicationViewModel.Offer = _mapper.Map<OfferQueryReponse>(offerResponse);
                     }
                     
                     user.ApplicationList.Add(applicationViewModel);

@@ -69,6 +69,6 @@ public class CreatedCandidateOfferCommandHandler : IRequestHandler<CreatedCandid
         }
 
 
-        return await Task.FromResult(new CreatedCandidateOfferCommandResponse());
+        return await Task.FromResult(new CreatedCandidateOfferCommandResponse(){UserOfferId = Guid.NewGuid()});
     }
 }                    
