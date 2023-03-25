@@ -1,10 +1,5 @@
-using System.Reflection;
-using Candidate.Application;
-using Candidate.Application.Contracts.Persistence;
 using Candidate.Application.Installers;
-using Candidate.Persistence.EF;
 using Candidate.Persistence.EF.Installers;
-using Common.Installers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+//builder.Services.InstallServiceInAssembly(builder.Configuration, typeof(Program));
 builder.Services.InstallerPersistenceEFServiceInAssembly(builder.Configuration);
 builder.Services.InstallerApplicationServiceInAssembly(builder.Configuration);
 
@@ -30,7 +26,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//zakomentowane ze wzgledu na problemy z dokerem
+//zakomentowac ze wzgledu na problemy z dokerem
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

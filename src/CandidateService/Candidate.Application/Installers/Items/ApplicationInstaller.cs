@@ -13,8 +13,11 @@ public class ApplicationInstaller : IInstaller
 {
     public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        
+        
+        services.AddAutoMapper(typeof(ApplicationInstaller).Assembly);
+        services.AddMediatR(typeof(ApplicationInstaller).Assembly);
 
         services.AddScoped<IOfferClientService, OfferClientService>();
 

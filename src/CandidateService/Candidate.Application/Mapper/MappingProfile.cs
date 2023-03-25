@@ -12,6 +12,8 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<User, UserViewModel>()
+            .ForMember(dest => dest.UserId,
+                opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Surrname,
             opt => opt.MapFrom(src => src.Surrname))
             .ForMember(dest => dest.FirstName,

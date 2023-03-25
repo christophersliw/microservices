@@ -10,6 +10,8 @@ public class PersistenceEFInstaller : IInstaller
 {
     public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
+        Console.WriteLine("11111111111111111111");
+        
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
         services.AddScoped<IAsyncUserRepository, UserRepository>();
