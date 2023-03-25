@@ -1,4 +1,3 @@
-using System.Reflection;
 using Candidate.Application.BackgroundServices;
 using Candidate.Application.Services;
 using Common.Installers;
@@ -13,9 +12,6 @@ public class ApplicationInstaller : IInstaller
 {
     public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
-        Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        
-        
         services.AddAutoMapper(typeof(ApplicationInstaller).Assembly);
         services.AddMediatR(typeof(ApplicationInstaller).Assembly);
 
