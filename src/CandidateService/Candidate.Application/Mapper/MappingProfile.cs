@@ -11,7 +11,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<User, UserViewModel>()
+        CreateMap<User, UserQueryResponse>()
             .ForMember(dest => dest.UserId,
                 opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Surrname,
@@ -31,7 +31,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.UserId,
                 opt => opt.MapFrom(src => src.UserId));
         
-        CreateMap<OfferResponse, OfferViewModel>()
+        CreateMap<OfferResponse, OfferQueryReponse>()
             .ForMember(dest => dest.OfferId,
                 opt => opt.MapFrom(src => src.OfferId))
             .ForMember(dest => dest.Name,
