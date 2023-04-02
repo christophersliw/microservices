@@ -1,5 +1,6 @@
 using Recruitment.Application;
 using Recruitment.Persistence.EF;
+using Recruitment.Persistence.EF.Installers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 builder.Services.AddRecruitmentApplication();
-builder.Services.AddPersistanceEFServices();
+builder.Services.InstallerPersistenceEFServiceInAssembly(builder.Configuration);
 
 var app = builder.Build();
 

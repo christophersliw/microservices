@@ -3,6 +3,7 @@ using Candidate.Application.Contracts.Persistence;
 using Candidate.Application.Responses;
 using Candidate.Application.Services;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
@@ -39,7 +40,7 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
 
         foreach (var user in result)
         {
-            var userApplicationList = await _asyncUserOfferRepository.GetByUserIdAsync(user.UserId);
+            var userApplicationList = await _asyncUserOfferRepository.GetQuery().Where(e => e.UserId == user.UserId).ToListAsync();
 
             if (userApplicationList.Any())
             {

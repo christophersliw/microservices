@@ -1,6 +1,8 @@
+using Common.Installers.Persistance.Contracts;
+
 namespace Candidate.Domain.Entities;
 
-public class User
+public class User : IDataEntity
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }

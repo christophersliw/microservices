@@ -19,5 +19,5 @@ public class RecruitmentDbContext : DbContext
         modelBuilder.ApplyConfiguration(new OfferConfiguration());
     }
     
-    public DbSet<Offer> Offer { get; set; }
+    public DbSet<Offer> Offers { get; set; }
 }

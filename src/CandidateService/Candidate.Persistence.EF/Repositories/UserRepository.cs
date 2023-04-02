@@ -1,13 +1,13 @@
 using Candidate.Application.Contracts.Persistence;
 using Candidate.Domain.Entities;
 using Candidate.Persistence.EF.DummyData;
+using Common.Installers.Persistance;
 
 namespace Candidate.Persistence.EF.Repositories;
 
-public class UserRepository : BaseRepository<User>, IAsyncUserRepository
+public class UserRepository : BaseRepository<User, CandidateDbContext>, IAsyncUserRepository
 {
-    public new Task<IReadOnlyList<User>> GetAllAsync()
+    public UserRepository(CandidateDbContext dbContext) : base(dbContext)
     {
-        return Task.FromResult<IReadOnlyList<User>>(DummyUsers.Get());
     }
 }

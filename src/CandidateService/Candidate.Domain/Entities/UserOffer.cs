@@ -1,6 +1,8 @@
+using Common.Installers.Persistance.Contracts;
+
 namespace Candidate.Domain.Entities;
 
-public class UserOffer
+public class UserOffer : IDataEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
