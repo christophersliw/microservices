@@ -1,12 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Recruitment.Domain.Enities;
+using Recruitment.Persistence.EF.EntityConfigurations;
 
 namespace Recruitment.Persistence.EF;
 
 public class RecruitmentDbContext : DbContext
 {
     public const string DEFAULT_SCHEMA = "recruitment";
-    
+
+    public RecruitmentDbContext(DbContextOptions options) : base(options)
+    {
+
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
        

@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Recruitment.Domain.Enities;
 
-namespace Recruitment.Domain.Enities;
+namespace Recruitment.Persistence.EF.EntityConfigurations;
 
 public class OfferConfiguration : IEntityTypeConfiguration<Offer>
 {
