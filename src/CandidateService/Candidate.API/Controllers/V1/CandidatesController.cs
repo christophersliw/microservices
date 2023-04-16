@@ -29,15 +29,17 @@ public class CandidatesController : ControllerBase
     {
         _logger.LogInformation("start - CandidateController > Search");
         
-        var userInListViewModel = await _mediator.Send(new GetUserListQuery() {PageIndex = pageIndex, PageSize = pageSize});
+        var userQueryResponse = await _mediator.Send(new GetUserListQuery() {PageIndex = pageIndex, PageSize = pageSize});
 
+        var userResponse = _mapper.Map<UserResponse>(userQueryResponse);
+        
         _logger.LogInformation("end - CandidateController > Search");
         
-        return Ok(userInListViewModel);
+        return Ok(userResponse);
     }
     
     [HttpGet(ApiRoutes.Candidates.Get)]
-    public async Task<ActionResult<List<UserQueryResponse>>> Get([FromQuery]Guid userOfferId)
+    public async Task<ActionResult<List<UserQueryResponse>>> Get([FromRoute]Guid userOfferId)
     {
         _logger.LogInformation("start - CandidateController > Get");
         
@@ -49,15 +51,17 @@ public class CandidatesController : ControllerBase
     }
     
     [HttpGet(ApiRoutes.Candidates.GetAll)]
-    public async Task<ActionResult<List<UserQueryResponse>>> GetAll()
+    public async Task<ActionResult<List<UserResponse>>> GetAll()
     {
         _logger.LogInformation("start - CandidateController > GetAll");
         
-        var userInListViewModel = await _mediator.Send(new GetUserListQuery() {PageIndex = 0, PageSize = 0});
+        var userQueryResponse = await _mediator.Send(new GetUserListQuery() {PageIndex = 0, PageSize = 0});
+
+        var userResponse = _mapper.Map<UserResponse>(userQueryResponse);
 
         _logger.LogInformation("end - CandidateController > GetAll");
         
-        return Ok(userInListViewModel);
+        return Ok(userResponse);
     }
     
     [HttpPost(ApiRoutes.Candidates.Create)]
@@ -79,7 +83,7 @@ public class CandidatesController : ControllerBase
     }
 
     [HttpPatch(ApiRoutes.Candidates.ChangeStatus)]
-    public async Task<ActionResult> ChangeStatus([FromQuery] Guid id, [FromBody] UpdateCandidateAplicationStatusCommand updateCandidateAplicationStatusCommand)
+    public async Task<ActionResult> ChangeStatus([FromRoute] Guid id, [FromBody] UpdateCandidateAplicationStatusCommand updateCandidateAplicationStatusCommand)
     {
         await _mediator.Send(updateCandidateAplicationStatusCommand);
 

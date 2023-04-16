@@ -61,14 +61,14 @@ public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, List<Us
                     ApplicationQueryResponse applicationViewModel = new ApplicationQueryResponse()
                     {
                         ApplicationDate = userOffer.ApplicationDate,
-                        ApplicationGuid = userOffer.Id
+                        ApplicationId = userOffer.Id
                     };
 
                     var offerResponse = offers.FirstOrDefault(e => e.OfferId == userOffer.OfferId);
 
                     if (offerResponse != null)
                     {
-                        applicationViewModel.Offer = _mapper.Map<OfferQueryReponse>(offerResponse);
+                        applicationViewModel.Offer = _mapper.Map<OfferQueryResponse>(offerResponse);
                     }
                     
                     user.ApplicationList.Add(applicationViewModel);

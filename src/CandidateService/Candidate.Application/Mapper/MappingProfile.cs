@@ -31,7 +31,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.UserId,
                 opt => opt.MapFrom(src => src.UserId));
         
-        CreateMap<OfferResponse, OfferQueryReponse>()
+        CreateMap<OfferResponse, OfferQueryResponse>()
             .ForMember(dest => dest.OfferId,
                 opt => opt.MapFrom(src => src.OfferId))
             .ForMember(dest => dest.Name,
