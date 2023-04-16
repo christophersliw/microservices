@@ -112,6 +112,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Library\Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruitment.Migrations", "src\RecruitmentService\Recruitment.Migrations\Recruitment.Migrations.csproj", "{5164142B-8145-4D23-9DE9-1CBEC24364C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Candidate.Migrations", "src\CandidateService\Candidate.Migrations\Candidate.Migrations.csproj", "{6511A5E1-B86A-46B5-ABD5-15EB63055FF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -226,6 +228,10 @@ Global
 		{5164142B-8145-4D23-9DE9-1CBEC24364C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5164142B-8145-4D23-9DE9-1CBEC24364C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5164142B-8145-4D23-9DE9-1CBEC24364C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6511A5E1-B86A-46B5-ABD5-15EB63055FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6511A5E1-B86A-46B5-ABD5-15EB63055FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6511A5E1-B86A-46B5-ABD5-15EB63055FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6511A5E1-B86A-46B5-ABD5-15EB63055FF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -282,6 +288,7 @@ Global
 		{B575E83B-8C5F-4558-ADBB-4337F8092CE4} = {103AB0EC-0F67-4FFB-99BF-C43DA2F66C32}
 		{28B4AFEF-3611-484B-8C38-364B21491529} = {984C4463-4E68-4101-8531-015BAF38C28D}
 		{5164142B-8145-4D23-9DE9-1CBEC24364C9} = {3E85E757-902A-43B0-A36C-7A2272886B09}
+		{6511A5E1-B86A-46B5-ABD5-15EB63055FF4} = {0BEDF789-0FD4-41E5-BF5F-077EF34CD5C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E6013DD-CABB-4816-A270-694619EB38C8}

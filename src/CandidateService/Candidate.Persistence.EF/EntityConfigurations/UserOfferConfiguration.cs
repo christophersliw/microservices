@@ -1,7 +1,8 @@
+using Candidate.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Candidate.Domain.Entities;
+namespace Candidate.Persistence.EF.EntityConfigurations;
 
 public class UserOfferConfiguration : IEntityTypeConfiguration<UserOffer>
 {
