@@ -1,35 +1,39 @@
-using Candidate.Application.Installers;
-using Candidate.Persistence.EF.Installers;
+using Candidate.API.Installers;
+using Candidate.API.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.Install<Program>(builder.Configuration);
+builder.Services.Install<Candidate.Persistence.EF.MarkerAssembly>(builder.Configuration);
+builder.Services.Install<Candidate.Application.MarkAssembly>(builder.Configuration);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-//builder.Services.InstallServiceInAssembly(builder.Configuration, typeof(Program));
-builder.Services.InstallerPersistenceEFServiceInAssembly(builder.Configuration);
-builder.Services.InstallerApplicationServiceInAssembly(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var swaggerOptions = new SwaggerOptions();
+    builder.Configuration.Bind(nameof(SwaggerOptions), swaggerOptions);
+
+    app.UseSwagger(o => { o.RouteTemplate = swaggerOptions.JsonRoute; });
+    app.UseSwaggerUI(o =>
+    {
+        o.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+       // o.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
+    
+    });
+
 }
 
 //zakomentowac ze wzgledu na problemy z dokerem
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseAuthentication();
+//app.UseAuthorization();
 
 
 app.MapControllers();

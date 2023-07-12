@@ -6,11 +6,15 @@ using Candidate.Application.Functions.Candidates.Commands;
 using Candidate.Application.Functions.Candidates.Commands.CreateCandidateOffer;
 using Candidate.Application.Functions.Candidates.Queries.GetUserListQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Candidate.API.Controllers.V1;
 
 [ApiController]
+[ApiExplorerSettings(GroupName = "v1")]
+// [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class CandidatesController : ControllerBase
 {
     private readonly ILogger<CandidatesController> _logger;

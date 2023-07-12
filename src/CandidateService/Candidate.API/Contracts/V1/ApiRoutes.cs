@@ -14,7 +14,5 @@ public static class ApiRoutes
         public const string Create = $"{Base}/candidates";
         public const string Get = $"{Base}/candidates/{{userOfferId:guid}}";
         public const string ChangeStatus = $"{Base}/candidates/{{userOfferId:guid}}/changestatus";
-
     }
-
 }
