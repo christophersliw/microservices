@@ -23,9 +23,10 @@ public class CandidateController : ControllerBase
     {
         _logger.LogInformation("Start - CandidateController > Get");
         
-        string path = $"api/candidateservice/candidate?pageSize={pageSize}&pageIndex={pageIndex}";
+        string path = "api/v1/candidateservice/candidates/search";
+        string query = $"?pageSize={pageSize}&pageIndex={pageIndex}";
         
-        var result = await _candidateClient.GetAsync<List<UserInListViewModelResponse>>(path, cancellationToken);
+        var result = await _candidateClient.GetAsync<List<UserInListViewModelResponse>>(path, query,cancellationToken);
         
         _logger.LogInformation("End - CandidateController > Get");
 			
@@ -40,7 +41,7 @@ public class CandidateController : ControllerBase
         
         string path = $"api/candidateservice/candidate";
         
-         await _candidateClient.PostAsync<CreateCandidateOfferRequest>(path,createCandidateOfferRequest, cancellationToken);
+         await _candidateClient.PostAsync<CreateCandidateOfferRequest>(path,null,createCandidateOfferRequest, cancellationToken);
         
         _logger.LogInformation("End - CandidateController > Post");
 			

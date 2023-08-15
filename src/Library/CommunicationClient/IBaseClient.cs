@@ -12,5 +12,6 @@ public interface IBaseClient
     
     Task PutAsync<TRequestContent>(Uri uri, TRequestContent requestContentObject,
         CancellationToken cancellationToken);
-    Uri BuildUri(string format);
+    Uri BuildUri(string path, string query);
+    public Uri BuildUri(string path);
 }

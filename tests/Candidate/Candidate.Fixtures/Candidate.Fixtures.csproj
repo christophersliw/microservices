@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\src\CandidateService\Candidate.Persistence.EF\Candidate.Persistence.EF.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.21" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.10" />
+    </ItemGroup>
+
+</Project>

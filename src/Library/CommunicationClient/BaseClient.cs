@@ -102,11 +102,19 @@ public class BaseClient : IBaseClient
         response.EnsureSuccessStatusCode();
     }
 
-    public Uri BuildUri(string format)
+    public Uri BuildUri(string path, string query)
     {
         return new UriBuilder(_baseUri)
         {
-            Path = format
+            Path = path,
+            Query = query
+        }.Uri;
+    }
+    public Uri BuildUri(string path)
+    {
+        return new UriBuilder(_baseUri)
+        {
+            Path = path
         }.Uri;
     }
 }
