@@ -49,6 +49,7 @@ public class RabbitMQEventBus : IIntegrationEventBus
         using (var channel = _rabbitMqPersistentConnection.CreateModel())
         {
             _logger.LogInformation($"RabbitMQEventBus > Publish - definiujemy exchange brokera");
+            //durable = true - kolejka nie zostanie usunięta po zatrzymaniu uslugi rabbita
             channel.ExchangeDeclare(exchange: BROKER_NAME, type: "direct");
 
             var message = JsonConvert.SerializeObject(@event);
@@ -56,6 +57,9 @@ public class RabbitMQEventBus : IIntegrationEventBus
 
             var properties = channel.CreateBasicProperties();
             //zapisanie na dysku przed wyslaniem
+            //zabezpieczenie na wypadek wylaczenia uslugi rabbita
+            //message nie zostanie usuniety
+            // properties.Persistent = true; 
             properties.DeliveryMode = 2; // persistent
 
             _logger.LogInformation($"RabbitMQEventBus > Publish - pubishing event: {@event.EventId}");
@@ -89,12 +93,14 @@ public class RabbitMQEventBus : IIntegrationEventBus
 
             channel.ExchangeDeclare(exchange: BROKER_NAME, type: "direct");
 
-            //var queueName = channel.QueueDeclare().QueueName;
+            // var queueName = channel.QueueDeclare().QueueName;
 
+            //uzyjemy stalej nazwy kolejki
             var queueName = DEFAULT_QUEUE_NAME;
 
             _logger.LogInformation($"RabbitMQEventBus > Subscribe - deklaracja kolejki: ");
 
+            //durable = true - kolejka nie zostanie usunięta po zatrzymaniu uslugi rabbita
             channel.QueueDeclare(queue: queueName,
                 durable: true,
                 exclusive: false,
@@ -106,6 +112,8 @@ public class RabbitMQEventBus : IIntegrationEventBus
                 routingKey: eventName);
 
             var consumer = new EventingBasicConsumer(channel);
+            
+  
             
             consumer.Received += async (model, ea) =>
             {
@@ -123,6 +131,7 @@ public class RabbitMQEventBus : IIntegrationEventBus
                         foreach (var subscriptionInfo in subcripions)
                         {
                             var handler = scope.ServiceProvider.GetRequiredService(subscriptionInfo.HandlerType);
+            
 
                             if (handler == null)
                                 continue;
@@ -132,7 +141,9 @@ public class RabbitMQEventBus : IIntegrationEventBus
 
                             var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(eventType);
 
-                            //gwarancja tego ze metoda synchroniczna bedzie uruchomiona jako asynchroniczna i watek wyjdzie z tej metody
+                            //gwarancja tego ze w przypadku, gdy metoda Handle bedzie synchroniczna, to na chwile wyskoczymy
+                            //aby bylo mozna przetworzyc kolejny element z kolejki
+                            //allow caller to continue while waiting for asynchronous operation
                             await Task.Yield();
                             await (Task) concreteType.GetMethod("Handle")
                                 .Invoke(handler, new object[] {integrationEvent});
@@ -144,6 +155,9 @@ public class RabbitMQEventBus : IIntegrationEventBus
             };
 
             _logger.LogInformation($"RabbitMQEventBus > Subscribe - rozpoczynamy subskrypcje");
+            //autoAck: false - potwierdzenie przetworzenie message nie wyjdzie automatycznie,
+            //kolejka usunie message dopiero jak dostanie info o zakonczeniu: channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+            //jest to zabezpecznie na wypadek wylaczenia usługi przetwarzajacej message
             channel.BasicConsume(queue: queueName,
                 autoAck: false,
                 consumer: consumer);

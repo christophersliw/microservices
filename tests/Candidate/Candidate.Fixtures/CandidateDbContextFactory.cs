@@ -12,6 +12,7 @@ public class CandidateDbContextFactory
                 DbContextOptionsBuilder()
             .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
         
+        
         var context = new CandidateDbContextTest(contextOptions);
         context.Database.EnsureCreated();
         CandidateDbContextTestInstance = context;
