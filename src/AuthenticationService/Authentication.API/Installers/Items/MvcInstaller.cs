@@ -38,32 +38,32 @@ public class MvcInstaller : IInstaller
         //         };
         //     });
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(o =>
-        {
-            o.SwaggerDoc("grupa1", new OpenApiInfo {Title = "Authentication1111", Version = "v1"});
-            o.SwaggerDoc("grupa2", new OpenApiInfo {Title = "Authentication1", Version = "v1111"});
-            
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            o.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
-            
-            o.TagActionsBy(api =>
-            {
-                // if (api.GroupName != null)
-                // {
-                //     return new[] { api.GroupName };
-                // }
-                
-                if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
-                {
-                    return new[] { controllerActionDescriptor.ControllerName };
-                }
-
-                throw new InvalidOperationException("Unable to determine tag for endpoint.");
-            });
-            
-           // o.DocInclusionPredicate((name, api) => true);
-        });
+        // services.AddSwaggerGen(o =>
+        // {
+        //     o.SwaggerDoc("grupa1", new OpenApiInfo {Title = "Authentication1111", Version = "v1"});
+        //     o.SwaggerDoc("grupa2", new OpenApiInfo {Title = "Authentication1", Version = "v1111"});
+        //     
+        //     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        //     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        //     o.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+        //     
+        //     o.TagActionsBy(api =>
+        //     {
+        //         // if (api.GroupName != null)
+        //         // {
+        //         //     return new[] { api.GroupName };
+        //         // }
+        //         
+        //         if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+        //         {
+        //             return new[] { controllerActionDescriptor.ControllerName };
+        //         }
+        //
+        //         throw new InvalidOperationException("Unable to determine tag for endpoint.");
+        //     });
+        //     
+        //    // o.DocInclusionPredicate((name, api) => true);
+        // });
 
 
 
